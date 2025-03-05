@@ -28,13 +28,13 @@ int main() {
             ProcessUpdateData();
             break;
         case '3':
-            // ProcessDeleteData();
+            ProcessDeleteData();
             break;
         case '4':
-            // ProcessSearchData();
+            ProcessSearchData();
             break;
         case '5':
-            // ProcessShowAllData();
+            ProcessShowAllData();
             break;
         }
     } while(chMenu != '6');

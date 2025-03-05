@@ -40,11 +40,9 @@ int ProcessInsertData(void) {
         printf("Last name : ");
         scanf("%s", &student.last_Name);
         printf("Address : ");
-        getchar();
-        fgets(student.address, sizeof(student.address), stdin);
-        student.address[strcspn(student.address, "\n")] = 0;
+        scanf(" %[^\n]", &student.address);
         printf("Tel : ");
-        scanf("%s", &student.address);
+        scanf("%s", &student.tell);
 
         ioResult = fwrite(&student, sizeof(student), 1, fp);
 
@@ -61,8 +59,7 @@ int ProcessInsertData(void) {
 
 int ProcessUpdateData(void) {
     FILE *fp;
-    char chkEdit;
-    char inEdit[30];
+    char chkEdit, inEdit;
     errno_t err;
     struct PERSON student;
     int ioResult, isDataFound = 0;
@@ -89,28 +86,70 @@ int ProcessUpdateData(void) {
                 printf("Address : %s\n", student.address);
                 printf("Tel : %s\n", student.tell);
 
+                struct PERSON studentEdit = student;
                 printf("\nDo you want to edit data (y/n) ?\n");
                 chkEdit = _getch();
                 if (chkEdit == 'y') {
                     fseek(fp, (index) * sizeof(student), SEEK_SET);
+                    do {
+                        system("cls");
+                        printf("~~~~~~~~~~~~~~ Edit Data ~~~~~~~~~~~~~~\n\n");
+                        printf("Please select the number for edit data \n");
+                        printf("1) Student ID\n");
+                        printf("2) Title name\n");
+                        printf("3) First name\n");
+                        printf("4) Last name\n");
+                        printf("5) Address\n");
+                        printf("6) Tell\n");
+                        printf("7) Edit All\n");
+                        printf("8) Quit to Edit\n\n");
+                        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+                        inEdit = _getch();
+                        system("cls");
+                        switch (inEdit)
+                            {
+                            case '1':
+                                printf("Student ID : ");
+                                scanf("%s", &studentEdit.ID);
+                                break;
+                            case '2':
+                                printf("Title name : ");
+                                scanf("%s", &studentEdit.title_Name);
+                                break;
+                            case '3':
+                                printf("First name : ");
+                                scanf("%s", &studentEdit.first_Name);
+                                break;
+                            case '4':
+                                printf("Last name : ");
+                                scanf("%s", &studentEdit.last_Name);
+                                break;
+                            case '5':
+                                printf("Address : ");
+                                scanf(" %[^\n]", studentEdit.address);
+                                break;
+                            case '6':
+                                printf("Tel : ");
+                                scanf("%s", &studentEdit.address);
+                                break;
+                            case '7':
+                                printf("Student ID : ");
+                                scanf("%s", &studentEdit.ID);
+                                printf("Title name : ");
+                                scanf("%s", &studentEdit.title_Name);
+                                printf("First name : ");
+                                scanf("%s", &studentEdit.first_Name);
+                                printf("Last name : ");
+                                scanf("%s", &studentEdit.last_Name);
+                                printf("Address : ");
+                                scanf(" %[^\n]", student.address);
+                                printf("Tel : ");
+                                scanf("%s", &studentEdit.tell);
+                                break;
+                            }
+                    } while (inEdit != '8');
 
-                    printf("\n~~~ Edit Data ~~~\n");
-                    // inEdit = gets();
-                    printf("Student ID : ");
-                    scanf("%s", &studentEdit.ID);
-                    printf("Title name : ");
-                    scanf("%s", &studentEdit.title_Name);
-                    printf("First name : ");
-                    scanf("%s", &studentEdit.first_Name);
-                    printf("Last name : ");
-                    scanf("%s", &studentEdit.last_Name);
-                    printf("Address : ");
-                    getchar();
-                    fgets(studentEdit.address, sizeof(studentEdit.address), stdin);
-                    studentEdit.address[strcspn(studentEdit.address, "\n")] = 0;
-                    printf("Tel : ");
-                    scanf("%s", &studentEdit.address);
-
+                    fseek(fp, -((long)sizeof(student)), SEEK_CUR);
                     ioResult = fwrite(&studentEdit, sizeof(studentEdit), 1, fp);
                     if (ioResult != 1) {
                         printf("Error writing file DataStudent.txt\n");
@@ -125,6 +164,212 @@ int ProcessUpdateData(void) {
         if (isDataFound == 0) {
             printf("Data is not found.");
         }
+        if (fclose(fp) == EOF) {
+            printf("Error closing file DataStudent.txt");
+        }
+    }
+    return 0;
+}
+
+// int ProcessUpdateData(void) {
+//     FILE *fp;
+//     char chkEdit, inEdit;
+//     errno_t err;
+//     struct PERSON student;
+//     int ioResult, isDataFound = 0;
+//     char studentID[11];
+//     struct PERSON studentEdit;
+//     int index = 0;
+
+//     printf("************ Update data ************\n");
+//     printf("Student ID :");
+//     scanf("%s", studentID);
+//     err = fopen_s(&fp,  "./Data/DataStudent.txt", "r+");
+//     if (err != 0) {
+//         printf("Error opening file DataStudent.txt");
+//     } else {
+//         do {
+//             ioResult = fread(&student, sizeof(student), 1, fp);
+
+//             if ((ioResult == 1) && (strcmp(studentID, student.ID) == 0)) {
+//                 printf("~~~ Current Data ~~~\n");
+//                 printf("\nStudent ID : %s\n", student.ID);
+//                 printf("Title name : %s\n", student.title_Name);
+//                 printf("First name : %s\n", student.first_Name);
+//                 printf("Last name : %s\n", student.last_Name);
+//                 printf("Address : %s\n", student.address);
+//                 printf("Tel : %s\n", student.tell);
+
+//                 printf("\nDo you want to edit data (y/n) ?\n");
+//                 chkEdit = _getch();
+//                 if (chkEdit == 'y') {
+//                     fseek(fp, (index) * sizeof(student), SEEK_SET);
+//                     printf("~~~~~~~~~~~~~~ Edit Data ~~~~~~~~~~~~~~\n");
+//                     printf("Student ID : ");
+//                     scanf("%s", &studentEdit.ID);
+//                     printf("Title name : ");
+//                     scanf("%s", &studentEdit.title_Name);
+//                     printf("First name : ");
+//                     scanf("%s", &studentEdit.first_Name);
+//                     printf("Last name : ");
+//                     scanf("%s", &studentEdit.last_Name);
+//                     printf("Address : ");
+//                     scanf(" %[^\n]", &studentEdit.address);
+//                     printf("Tel : ");
+//                     scanf("%s", &studentEdit.tell);
+//                     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+//                     ioResult = fwrite(&studentEdit, sizeof(studentEdit), 1, fp);
+//                     if (ioResult != 1) {
+//                         printf("Error writing file DataStudent.txt\n");
+//                     }
+//                 }
+//                 isDataFound = 1;
+//                 break;
+//             }
+//             index++;
+//         } while (ioResult != 0);
+
+//         if (isDataFound == 0) {
+//             printf("Data is not found.");
+//         }
+//         if (fclose(fp) == EOF) {
+//             printf("Error closing file DataStudent.txt");
+//         }
+//     }
+//     return 0;
+// }
+
+int ProcessDeleteData(void) {
+    FILE *fp, *fpTemp;
+    char chkDelete;
+    errno_t err, errTemp;
+    struct PERSON student;
+    int ioResult, ioResultTemp, isDataFound = 0;
+    char studentID[11];
+    int index = 0;
+
+    printf("************ Delete data ************\n");
+    printf("Student ID:");
+    scanf("%s", studentID);
+
+    errTemp = fopen_s(&fpTemp, "./Data/DataStudent.tmp", "w");
+    err = fopen_s(&fp, "./Data/DataStudent.txt", "r");
+    if (err != 0 && errTemp != 0) {
+        printf("Error opening file DataStudent.txt");
+    } else {
+        do {
+            chkDelete = 'n';
+            ioResult = fread(&student, sizeof(student), 1, fp);
+
+            if ((ioResult == 1) && (strcmp(studentID, student.ID) == 0)) {
+                printf("~~~ Current Data ~~~\n");
+                printf("\nStudent ID : %s\n", student.ID);
+                printf("Title name : %s\n", student.title_Name);
+                printf("First name : %s\n", student.first_Name);
+                printf("Last name : %s\n", student.last_Name);
+                printf("Address : %s\n", student.address);
+                printf("Tell : %s\n", student.tell);
+
+                printf("\nDo you want to delete data (y/n) ?\n");
+                chkDelete = _getch();
+
+                isDataFound = 1;
+            }
+            if (chkDelete == 'n' && ioResult != 0) {
+                ioResultTemp = fwrite(&student, sizeof(student), 1, fpTemp);
+                if (ioResultTemp != 1) {
+                    printf("Error writing file DataStudent.tmp\n");
+                }
+            }
+            index++;
+        } while (ioResult != 0);
+
+        if (fclose(fp) != 0) {
+            printf("Error closing file DataStudent.txt");
+        }
+        if (fclose(fpTemp) == EOF) {
+            printf("Error closing file DataStudent.tmp");
+        }
+
+        if (isDataFound == 0) {
+            printf("Data is not found.");
+            remove("./Data/DataStudent.tmp");
+        } else {
+            remove("./Data/DataStudent.txt");
+            rename("./Data/DataStudent.tmp","./Data/DataStudent.txt");
+        }
+    }
+    return 0;
+}
+
+int ProcessSearchData(void) {
+    FILE *fp;
+    errno_t err;
+    struct PERSON student;
+    int ioResult, isDataFound = 0;
+    char studentID[11];
+
+    printf("************ Search data ************\n");
+    printf("Student ID :");
+    scanf("%s", studentID);
+    
+    err = fopen_s(&fp, "./Data/DataStudent.txt", "r");
+    if (err != 0) {
+        printf("Error opening file DataStudent.txt");
+    } else {
+        do {
+            ioResult = fread(&student, sizeof(student), 1, fp);
+
+            if ((ioResult == 1) && (strcmp(studentID, student.ID) == 0)) {
+                printf("\nStudent ID : %s\n", student.ID);
+                printf("Title name : %s\n", student.title_Name);
+                printf("First name : %s\n", student.first_Name);
+                printf("Last name : %s\n", student.last_Name);
+                printf("Address : %s\n", student.address);
+                printf("Tell : %s\n", student.tell);
+                isDataFound = 1;
+            }
+        } while (ioResult != 0);
+
+        if (isDataFound == 0) {
+            printf("Data is not found.");
+        }
+        if (fclose(fp) == EOF) {
+            printf("Error closing file DataStudent.txt");
+        }
+    }
+    return 0;
+}
+
+int ProcessShowAllData(void) {
+    FILE *fp;
+    errno_t err;
+    struct PERSON student;
+    char chkExit;
+    int ioResult;
+
+    printf("************ Show all data ************\n");
+
+    err = fopen_s(&fp, "./Data/DataStudent.txt", "r");
+    if (err != 0) {
+        printf("Error opening file DataStudent.txt");
+    } else {
+        do {
+            do {
+                ioResult = fread(&student, sizeof(student), 1, fp);
+                if (ioResult == 1) {
+                    printf("\nStudent ID : %s\n", student.ID);
+                    printf("Title name : %s\n", student.title_Name);
+                    printf("First name : %s\n", student.first_Name);
+                    printf("Last name : %s\n", student.last_Name);
+                    printf("Address : %s\n", student.address);
+                    printf("Tell : %s\n", student.tell);
+                }
+            } while (ioResult != 0 );
+            printf("\n(e) for exit the menu ?\n");
+            chkExit = _getch();
+        } while (chkExit != 'e');
+
         if (fclose(fp) == EOF) {
             printf("Error closing file DataStudent.txt");
         }
