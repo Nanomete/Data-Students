@@ -193,7 +193,7 @@ int ProcessSearchData(void) {
     errno_t err;
     struct PERSON student;
     int ioResult, isDataFound = 0;
-    char studentID[11];
+    char studentID[11], chOut;
 
     printf("************ Search data ************\n");
     printf("Student ID :");
@@ -215,7 +215,9 @@ int ProcessSearchData(void) {
                 printf("Tell : %s\n", student.tell);
                 isDataFound = 1;
             }
-        } while (ioResult != 0);
+            printf("\n(e) for exit the menu ?\n");
+            chOut = _getch();
+        } while (ioResult != 0 && chOut != 'e');
 
         if (isDataFound == 0) {
             printf("Data is not found.");
