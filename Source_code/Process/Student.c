@@ -214,14 +214,14 @@ int ProcessSearchData(void) {
                 printf("Address : %s\n", student.address);
                 printf("Tell : %s\n", student.tell);
                 isDataFound = 1;
+                printf("\n(e) for exit the menu ?\n");
+                chOut = _getch();
+            } else if (isDataFound == 0) {
+                printf("Data is not found.");
+                chOut = 'e';
             }
-            printf("\n(e) for exit the menu ?\n");
-            chOut = _getch();
         } while (ioResult != 0 && chOut != 'e');
 
-        if (isDataFound == 0) {
-            printf("Data is not found.");
-        }
         if (fclose(fp) == EOF) {
             printf("Error closing file DataStudent.txt");
         }
