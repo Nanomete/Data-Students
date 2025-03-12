@@ -86,70 +86,24 @@ int ProcessUpdateData(void) {
                 printf("Address : %s\n", student.address);
                 printf("Tel : %s\n", student.tell);
 
-                struct PERSON studentEdit = student;
                 printf("\nDo you want to edit data (y/n) ?\n");
                 chkEdit = _getch();
                 if (chkEdit == 'y') {
                     fseek(fp, (index) * sizeof(student), SEEK_SET);
-                    do {
-                        system("cls");
-                        printf("~~~~~~~~~~~~~~ Edit Data ~~~~~~~~~~~~~~\n\n");
-                        printf("Please select the number for edit data \n");
-                        printf("1) Student ID\n");
-                        printf("2) Title name\n");
-                        printf("3) First name\n");
-                        printf("4) Last name\n");
-                        printf("5) Address\n");
-                        printf("6) Tell\n");
-                        printf("7) Edit All\n");
-                        printf("8) Quit to Edit\n\n");
-                        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-                        inEdit = _getch();
-                        system("cls");
-                        switch (inEdit)
-                            {
-                            case '1':
-                                printf("Student ID : ");
-                                scanf("%s", &studentEdit.ID);
-                                break;
-                            case '2':
-                                printf("Title name : ");
-                                scanf("%s", &studentEdit.title_Name);
-                                break;
-                            case '3':
-                                printf("First name : ");
-                                scanf("%s", &studentEdit.first_Name);
-                                break;
-                            case '4':
-                                printf("Last name : ");
-                                scanf("%s", &studentEdit.last_Name);
-                                break;
-                            case '5':
-                                printf("Address : ");
-                                scanf(" %[^\n]", studentEdit.address);
-                                break;
-                            case '6':
-                                printf("Tel : ");
-                                scanf("%s", &studentEdit.address);
-                                break;
-                            case '7':
-                                printf("Student ID : ");
-                                scanf("%s", &studentEdit.ID);
-                                printf("Title name : ");
-                                scanf("%s", &studentEdit.title_Name);
-                                printf("First name : ");
-                                scanf("%s", &studentEdit.first_Name);
-                                printf("Last name : ");
-                                scanf("%s", &studentEdit.last_Name);
-                                printf("Address : ");
-                                scanf(" %[^\n]", student.address);
-                                printf("Tel : ");
-                                scanf("%s", &studentEdit.tell);
-                                break;
-                            }
-                    } while (inEdit != '8');
-
-                    fseek(fp, -((long)sizeof(student)), SEEK_CUR);
+                    printf("~~~~~~~~~~~~~~ Edit Data ~~~~~~~~~~~~~~\n");
+                    printf("Student ID : ");
+                    scanf("%s", &studentEdit.ID);
+                    printf("Title name : ");
+                    scanf("%s", &studentEdit.title_Name);
+                    printf("First name : ");
+                    scanf("%s", &studentEdit.first_Name);
+                    printf("Last name : ");
+                    scanf("%s", &studentEdit.last_Name);
+                    printf("Address : ");
+                    scanf(" %[^\n]", &studentEdit.address);
+                    printf("Tel : ");
+                    scanf("%s", &studentEdit.tell);
+                    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
                     ioResult = fwrite(&studentEdit, sizeof(studentEdit), 1, fp);
                     if (ioResult != 1) {
                         printf("Error writing file DataStudent.txt\n");
