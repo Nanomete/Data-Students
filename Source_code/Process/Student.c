@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+// prototypes of functions
 int ProcessInsertData(void);
 int ProcessUpdateData(void);
 int ProcessDeleteData(void);
@@ -19,6 +20,11 @@ struct PERSON {
     char tell[22];
 }student;
 
+/**
+ * Insert student data into file DataStudent.txt
+ * @param void
+ * @return 0
+ */
 int ProcessInsertData(void) {
     FILE *  fp;
     errno_t err;
@@ -57,6 +63,11 @@ int ProcessInsertData(void) {
     return 0;
 }
 
+/**
+ * Update student data in file DataStudent.txt
+ * @param void
+ * @return 0
+ */
 int ProcessUpdateData(void) {
     FILE *fp;
     char chkEdit, inEdit;
@@ -171,6 +182,11 @@ int ProcessUpdateData(void) {
     return 0;
 }
 
+/**
+ * Delete student data from file DataStudent.txt
+ * @param void
+ * @return 0
+ */
 int ProcessDeleteData(void) {
     FILE *fp, *fpTemp;
     char chkDelete;
@@ -234,6 +250,11 @@ int ProcessDeleteData(void) {
     return 0;
 }
 
+/**
+ * Search student data in file DataStudent.txt
+ * @param void
+ * @return 0
+ */
 int ProcessSearchData(void) {
     FILE *fp;
     errno_t err;
@@ -274,7 +295,11 @@ int ProcessSearchData(void) {
     }
     return 0;
 }
-
+/**
+ * Show all student data from file DataStudent.txt
+ * @param void
+ * @return 0
+ */
 int ProcessShowAllData(void) {
     FILE *fp;
     errno_t err;

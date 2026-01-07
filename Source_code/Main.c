@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include "./Process/Student.c"
 
+/**
+ * Main function to display menu and call respective functions
+ * @return 0
+ */
 int main() {
     char chMenu;
     do {
